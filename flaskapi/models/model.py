@@ -9,6 +9,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
 from matplotlib.cm import rainbow
+import joblib
+
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -124,3 +126,9 @@ score.mean()
 
 
 
+joblib.dump(randomforest_classifier, 'randomforest_model.joblib')
+
+# Cross-validation and other code...
+
+# Display the mean score (optional)
+print("Random Forest Classifier Mean Score:", score.mean())
