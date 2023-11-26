@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Heart Disease Prediction</title>
+    <style>
+                
+    </style>
+</head>
+<body>
+    <h1>Heart Disease Prediction</h1>
+    <form id="prediction-form">
+        <label for="age">Age:</label>
+        <input type="text" id="age" name="age" required>
+
+        <label for="trestbps">Resting Blood Pressure:</label>
+        <input type="text" id="trestbps" name="trestbps" required>
+
+        <label for="chol">Cholesterol:</label>
+        <input type="text" id="chol" name="chol" required>
+
+        <label for="thalach">Maximum Heart Rate Achieved:</label>
+        <input type="text" id="thalach" name="thalach" required>
+
+        <label for="oldpeak">ST Depression Induced by Exercise Relative to Rest:</label>
+        <input type="text" id="oldpeak" name="oldpeak" required>
+
+        <label for="sex">Sex:</label>
+        <select id="sex" name="sex" required>
+            <option value="0">Female</option>
+            <option value="1">Male</option>
+        </select>
+
+        <!-- Add other features as needed -->
+
+        <button type="button" onclick="predict()">Predict</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        function predict() {
+            const form = document.getElementById('prediction-form');
+            const formData = new FormData(form);
+
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(Object.fromEntries(formData)),
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerText = `Prediction: ${data.prediction}`;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('result').innerText = 'Error predicting. Please try again.';
+            });
+        }
+    </script>
+</body>
+</html>

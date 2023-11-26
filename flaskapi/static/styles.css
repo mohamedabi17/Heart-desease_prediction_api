@@ -1,0 +1,61 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
+    margin: 50px;
+    background-image: url(./heart2.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* Avoid repetition */
+    /* Additional properties for a centered background image */
+    background-position: center;
+    background-attachment: fixed;
+    /* Keeps the background fixed while scrolling */
+}
+h1 {
+    color: red;
+    font-weight: 900;
+    font-family:  Georgia, Times, 'Times New Roman', serif;
+}
+
+form {
+    display: inline-block;
+    padding: 20px;
+    background-color: transparent;
+    border-radius: 8px;
+    color: red;
+    text-shadow: 0 0 15px #0000f0;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    background-color:transparent;
+    color: blue;
+    font-size: x-large;
+    text-align: center;
+}
+input:hover {
+    background-color:red;
+    color: white;
+    text-align: center;
+ 
+}
+
+button {
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
