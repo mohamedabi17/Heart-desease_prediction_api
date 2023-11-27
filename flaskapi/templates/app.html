@@ -75,11 +75,25 @@
         });
 
         console.log(jsonData);
-        axios.post('/predict', jsonData)
+         axios.post('/predict', jsonData)
             .then(response => {
                 const data = response.data;
                 console.log(response.data);
-                document.getElementById('result').innerText = `Prediction: ${data.prediction}`;
+
+                // Display an alert based on the prediction result
+                const alert = document.createElement('div');
+                alert.className = 'prediction-alert';
+               alert.classList.add(data.prediction === 1 ? 'red' : 'green');
+
+                // Set the message based on the prediction
+                alert.innerHTML = `<div><h1>${data.prediction === 1 ? 'Patient is going to have a heart disease.' : 'Patient is well.'}</h1><img src="${data.prediction === 1 ? '../static/heart_attack.webp' : '../static/safe_heart.webp'}" alt="${data.prediction === 1 ? 'Heart Disease' : 'Well'}"></div>`;
+
+                // Append the alert to the body
+                document.body.appendChild(alert);
+                // Set a timeout to remove the alert after a certain duration (e.g., 5000 milliseconds)
+                setTimeout(() => {
+                    alert.remove();
+                }, 5000);
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -87,7 +101,44 @@
             });
     }
 </script>
+<style>
+    .prediction-alert {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        border: 1px solid #ccc;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        padding: 20px;
+        background-size: cover; /* Set background size to cover */
+        background-repeat: no-repeat; /* Do not repeat the background */
+        background-position: center; /* Center the background image */
+    }
 
+    .prediction-alert h1 {
+        font-size: 24px;
+        margin-bottom: 10px;
+        font-weight: bold;
+        color: green; /* Default color for well prediction */
+    }
+
+    .prediction-alert img {
+        display: none; /* Hide the image element */
+    }
+
+    .prediction-alert.red {
+        background-image: url('../static/heart.webp'); /* Set the background image for heart disease prediction */
+        color: white; /* Set text color for better visibility */
+    }
+
+    .prediction-alert.green {
+        background-image: url('../static/heart2.png'); /* Set the background image for well prediction */
+    }
+</style>
+
+</style>
 
 </body>
 </html>
