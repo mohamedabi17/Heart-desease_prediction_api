@@ -15,16 +15,16 @@
         <label for="age">Age:</label>
         <input type="text" id="age" name="age" required>
 
-        <label for="trestbps">Resting Blood Pressure:</label>
+        <label for="trestbps">Resting Blood Pressure(trestbps):</label>
         <input type="text" id="trestbps" name="trestbps" required>
 
-        <label for="chol">Cholesterol:</label>
+        <label for="chol">Cholesterol(chol):</label>
         <input type="text" id="chol" name="chol" required>
 
-        <label for="thalach">Maximum Heart Rate Achieved:</label>
+        <label for="thalach">Maximum Heart Rate Achieved(thalach):</label>
         <input type="text" id="thalach" name="thalach" required>
 
-        <label for="oldpeak">ST Depression Induced by Exercise Relative to Rest:</label>
+        <label for="oldpeak">ST Depression Induced by Exercise Relative to Rest(oldpeak):</label>
         <input type="text" id="oldpeak" name="oldpeak" required>
 
         <label for="sex">Sex:</label>
@@ -39,31 +39,56 @@
     </form>
 
     <div id="result"></div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
- <script>
+<script>
     function predict() {
         const form = document.getElementById('prediction-form');
         const formData = new FormData(form);
-        console.log(formData);  // Corrected typo here
-        // Remove the Content-Type header or set it to undefined
-        // FormData will set the appropriate content type automatically
-        fetch('/predict', {
-            method: 'POST',
-            body: formData,
-        })
-            .then(response => response.json())
-            .then(data => {
+        console.log(formData);
+        // Convert FormData to JSON
+        const jsonData = {};
+
+        // Mapping of feature names in HTML form to Flask API
+        const featureMapping = {
+            'age': 'age',
+            'trestbps': 'trestbps',
+            'chol': 'chol',
+            'thalach': 'thalach',
+            'oldpeak': 'oldpeak',
+            'sex': ['sex_0', 'sex_1'],
+            // Add other features as needed
+        };
+
+        formData.forEach((value, key) => {
+            // Check if the key is mapped
+            if (featureMapping.hasOwnProperty(key)) {
+                const mappedKey = featureMapping[key];
+                if (Array.isArray(mappedKey)) {
+                    // Handle special case for 'sex'
+                    mappedKey.forEach((sexKey, index) => {
+                        jsonData[sexKey] = index === parseInt(value) ? 1 : 0;
+                    });
+                } else {
+                    // Handle other features
+                    jsonData[mappedKey] = value;
+                }
+            }
+        });
+
+        console.log(jsonData);
+        axios.post('/predict', jsonData)
+            .then(response => {
+                const data = response.data;
+                console.log(response.data);
                 document.getElementById('result').innerText = `Prediction: ${data.prediction}`;
             })
             .catch(error => {
                 console.error('Error:', error);
-                console.log(formData);
                 document.getElementById('result').innerText = 'Error predicting. Please try again.';
             });
     }
 </script>
-
-
 
 
 </body>
