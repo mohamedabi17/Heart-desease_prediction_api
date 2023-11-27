@@ -16,8 +16,11 @@
 # }
 
 
+# curl -X POST -H "Content-Type: application/json" -d '{"age": 50, "trestbps": 12,
+#  "chol": 200, "thalach": 150, "oldpeak": 2, "sex_0": 0,
+#   "sex_1": 1, "cp_0": 1, "cp_1": 0, "thal_0": 0, "thal_1": 1,
+#    "thal_2": 0, "thal_3": 0}' http://127.0.0.1:5000/predict
+
 curl -X POST -H "Content-Type: application/json" -d '{"age": 50, "trestbps": 12,
- "chol": 200, "thalach": 150, "oldpeak": 2, "sex_0": 0,
-  "sex_1": 1, "cp_0": 1, "cp_1": 0, "thal_0": 0, "thal_1": 1,
-   "thal_2": 0, "thal_3": 0}' http://127.0.0.1:5000/predict
+ "chol": 200, "thalach": 150, "oldpeak": 2, "sex_1": 1}' http://127.0.0.1:5000/predict
 

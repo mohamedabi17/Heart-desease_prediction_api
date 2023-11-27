@@ -25,12 +25,15 @@ def predict():
         # Get input data from the request
         data = request.get_json()
 
-        # Convert relevant features to float
+        # Define a list of required features
+        required_features = [
+            'age', 'trestbps', 'chol', 'thalach', 'oldpeak', 'sex_1',
+            'sex_1', 'cp_0', 'cp_1', 'thal_0', 'thal_1', 'thal_2', 'thal_3'
+        ]
+
+        # Convert relevant features to float, providing default values for missing ones
         features = [
-            float(data['age']), float(data['trestbps']), float(data['chol']),
-            float(data['thalach']), float(data['oldpeak']), float(data['sex_0']),
-            float(data['sex_1']), float(data['cp_0']), float(data['cp_1']),
-            float(data['thal_0']), float(data['thal_1']), float(data['thal_2']), float(data['thal_3'])
+            float(data.get(feature, 0)) for feature in required_features
         ]
 
         # Convert features to a NumPy array for prediction
@@ -44,6 +47,7 @@ def predict():
 
     except Exception as e:
         return jsonify({'error': str(e)})
+
 
 if __name__ == '__main__':
     app.run(debug=True)

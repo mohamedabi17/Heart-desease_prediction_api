@@ -23,8 +23,8 @@ form {
     padding: 20px;
     background-color: transparent;
     border-radius: 8px;
-    color: red;
-    text-shadow: 0 0 15px #0000f0;
+    color: blue;
+    text-shadow: 0 0 30px white;
 }
 
 label {
@@ -42,9 +42,10 @@ input {
     color: blue;
     font-size: x-large;
     text-align: center;
+    border-radius: 15% 75%;
 }
 input:hover {
-    background-color:red;
+    background-color:#ff00006e;
     color: white;
     text-align: center;
  

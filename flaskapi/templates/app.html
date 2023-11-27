@@ -66,12 +66,10 @@
                 const mappedKey = featureMapping[key];
                 if (Array.isArray(mappedKey)) {
                     // Handle special case for 'sex'
-                    mappedKey.forEach((sexKey, index) => {
-                        jsonData[sexKey] = index === parseInt(value) ? 1 : 0;
-                    });
+                    jsonData[mappedKey[parseInt(value)]] = 1;
                 } else {
                     // Handle other features
-                    jsonData[mappedKey] = value;
+                    jsonData[mappedKey] = parseInt(value);
                 }
             }
         });
